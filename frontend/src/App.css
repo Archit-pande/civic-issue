@@ -87,11 +87,14 @@ button {
   color: #94a3b8;
   padding: 9px 14px;
   border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.25s ease;
 }
 
 .nav-links button:hover {
   color: white;
   background: #172338;
+  transform: scale(1.05);
 }
 
 .login-btn {
@@ -103,11 +106,14 @@ button {
   border-radius: 9px;
   background: transparent;
   color: white;
+  cursor: pointer;
+  transition: all 0.25s ease;
 }
 
 .login-btn:hover {
   background: #2563eb;
   border-color: #2563eb;
+  transform: scale(1.05);
 }
 
 /* HERO */
