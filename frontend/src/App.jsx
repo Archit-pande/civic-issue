@@ -1049,7 +1049,7 @@ function Login({
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [role, setRole] = useState("citizen");
+  const role = "citizen";
   const [mode, setMode] = useState("login");
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
@@ -1087,7 +1087,7 @@ function Login({
         body: JSON.stringify(
           mode === "login"
             ? { email, password }
-            : { name, email, password, role }
+            : { name, email, password,}
         )
       });
 
@@ -1180,23 +1180,10 @@ function Login({
         />
 
         {mode === "register" && (
-          <>
-            <label>Account type</label>
-
-            <select
-              value={role}
-              onChange={(e) => setRole(e.target.value)}
-            >
-              <option value="citizen">
-                Citizen
-              </option>
-
-              <option value="authority">
-                Authority
-              </option>
-            </select>
-          </>
-        )}
+  <div className="citizen-only-message">
+    Account type: <strong>Citizen</strong>
+  </div>
+)}
 
         {error && (
           <div className="auth-error" role="alert">
