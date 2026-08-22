@@ -24,7 +24,7 @@ function publicUser(user) {
 
 async function register(req, res, next) {
   try {
-    const { name, email, password, role = "citizen" } = req.body;
+    const { name, email, password } = req.body;
 
     if (!name || !email || !password) {
       return res.status(400).json({
@@ -38,7 +38,7 @@ async function register(req, res, next) {
       });
     }
 
-    const safeRole = role === "authority" ? "authority" : "citizen";
+    
 
     const exists = await User.findOne({
       email: email.toLowerCase().trim()
@@ -56,7 +56,7 @@ async function register(req, res, next) {
       name,
       email,
       passwordHash,
-      role: safeRole
+      role: "citizen"
     });
 
     res.status(201).json({
