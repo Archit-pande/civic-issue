@@ -723,6 +723,13 @@ footer strong {
 footer p {
   color: #60a5fa;
 }
+.footer-logo{
+  width:160px;
+  height:55px;
+  object-fit: contain;
+  display:block;
+  margin:0 auto 10px;
+}
 
 /* MOBILE */
 

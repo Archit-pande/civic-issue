@@ -355,7 +355,11 @@ function App() {
       {/* FOOTER */}
 
       <footer>
-        <strong>🚦 CIVIC PULSE</strong>
+  <img 
+    src="/civic-logo.png" 
+    alt="civic pulse" 
+    className="footer-logo" 
+  />
 
         <p>Report. Track. Resolve.</p>
 
