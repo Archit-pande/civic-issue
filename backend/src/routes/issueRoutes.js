@@ -1,16 +1,28 @@
 const express = require("express");
+
 const {
   listIssues,
   getIssue,
   createIssue,
   updateIssue,
-  deleteIssue
+  deleteIssue,
+  getNearbyIssues,
+  getIssueStats
 } = require("../controllers/issueController");
-const { requireAuth, requireRole } = require("../middleware/auth");
+
+const {
+  requireAuth,
+  requireRole
+} = require("../middleware/auth");
 
 const router = express.Router();
 
 router.get("/", listIssues);
+
+router.get("/nearby", getNearbyIssues);
+
+router.get("/stats", getIssueStats);
+
 router.get("/:id", getIssue);
 
 router.post("/", createIssue);

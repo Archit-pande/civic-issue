@@ -60,11 +60,29 @@ const issueSchema = new mongoose.Schema(
       type: String,
       required: true,
       trim: true,
-      maxlength: 300
+      maxlength: 300,
+      index: true
     },
     coordinates: {
-      lat: { type: Number, min: -90, max: 90 },
-      lng: { type: Number, min: -180, max: 180 }
+      lat: {
+        type: Number,
+        min: -90,
+        max: 90
+      },
+      lng: {
+        type: Number,
+        min: -180,
+        max: 180
+      }
+    },
+    geoLocation: {
+      type: {
+        type: String,
+        enum: ["Point"]
+      },
+      coordinates: {
+        type: [Number]
+      }
     },
     reportedBy: {
       type: String,
@@ -89,12 +107,30 @@ const issueSchema = new mongoose.Schema(
   }
 );
 
+issueSchema.index({
+  geoLocation: "2dsphere"
+});
+
 issueSchema.pre("validate", function (next) {
   if (!this.issueId) {
     this.issueId = `CIVIC-${Date.now().toString().slice(-6)}-${Math.floor(
       Math.random() * 900 + 100
     )}`;
   }
+
+  if (
+    this.coordinates?.lat != null &&
+    this.coordinates?.lng != null
+  ) {
+    this.geoLocation = {
+      type: "Point",
+      coordinates: [
+        Number(this.coordinates.lng),
+        Number(this.coordinates.lat)
+      ]
+    };
+  }
+
   next();
 });
 
