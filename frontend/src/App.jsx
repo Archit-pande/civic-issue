@@ -164,17 +164,23 @@ function App() {
     setSelectedIssue(optimisticIssue);
     setPage("track");
 
-    try {
-      const saved = await api.createIssue(optimisticIssue);
-      setIssues((current) =>
-        current.map((item) =>
-          item.id === optimisticIssue.id ? saved : item
-        )
-      );
-      setSelectedIssue(saved);
-    } catch {
-      setApiError("Issue saved locally; backend is unavailable.");
-    }
+ try {
+  const saved = await api.createIssue(optimisticIssue);
+
+  setIssues((current) =>
+    current.map((item) =>
+      item.id === optimisticIssue.id ? saved : item
+    )
+  );
+
+  setSelectedIssue(saved);
+  setApiError("");
+
+} catch (error) {
+  setApiError(
+    error?.message || "Unable to save issue to the server."
+  );
+}
   };
 
   const updateIssueStatus = async (id, newStatus) => {
