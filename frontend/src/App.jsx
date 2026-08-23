@@ -1804,6 +1804,7 @@ setSubmitting(true);
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="e.g. Broken streetlight near hostel"
+              minLength={3}
               maxLength={100}
               required
             />
@@ -1853,6 +1854,7 @@ setSubmitting(true);
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Describe the problem clearly. Mention what happened, how serious it is, and how it affects people..."
+              minLength={5}
               maxLength={500}
               required
             />
