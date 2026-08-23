@@ -49,7 +49,7 @@ function isAllowedOrigin(origin) {
   }
 
   // Allow the main production Vercel domain.
- if (origin === "https://civicpulse-destroyer6.vercel.app") {
+ if (origin === "https://civicpulse-black-seven.vercel.app") {
   return true;
 }
 
