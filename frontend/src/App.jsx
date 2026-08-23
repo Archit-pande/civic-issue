@@ -1689,18 +1689,25 @@ function ReportIssue({
   const submitIssue = async (e) => {
     e.preventDefault();
 
-    if (
-      !title.trim() ||
-      !description.trim() ||
-      !location.trim()
-    ) {
-      setCameraError(
-        "Please fill the title, description and exact location."
-      );
-      return;
-    }
+    if (!title.trim() || !description.trim() || !location.trim()) {
+  setCameraError(
+    "Please fill the title, description and exact location."
+  );
+  return;
+}
 
-    setSubmitting(true);
+if (title.trim().length < 3) {
+  setCameraError("Issue title must be at least 3 characters.");
+  return;
+}
+
+if (description.trim().length < 5) {
+  setCameraError("Description must be at least 5 characters.");
+  return;
+}
+
+setCameraError("");
+setSubmitting(true);
 
     try {
       let uploadedEvidence = null;
