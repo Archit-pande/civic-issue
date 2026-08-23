@@ -1613,40 +1613,45 @@ function ReportIssue({
     });
   };
 
-  const startCamera = async () => {
-    setCameraError("");
+ const startCamera = async () => {
+  setCameraError("");
 
-    if (!navigator.mediaDevices?.getUserMedia) {
+  if (!navigator.mediaDevices?.getUserMedia) {
+    setCameraError(
+      "Camera access is not supported. Please use HTTPS or localhost."
+    );
+    return;
+  }
+
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({
+      video: {
+        facingMode: { ideal: "environment" },
+        width: { ideal: 1280 },
+        height: { ideal: 720 }
+      },
+      audio: false
+    });
+
+    streamRef.current = stream;
+    setCameraOpen(true);
+
+  } catch (error) {
+    console.error("Camera error:", error);
+
+    if (error.name === "NotAllowedError") {
       setCameraError(
-        "Camera access is not supported here. Use HTTPS or localhost."
+        "Camera permission was denied. Please allow camera access in your browser."
       );
-      return;
-    }
-
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({
-        video: {
-          facingMode: { ideal: "environment" },
-          width: { ideal: 1280 },
-          height: { ideal: 720 }
-        },
-        audio: false
-      });
-
-      streamRef.current = stream;
-      setCameraOpen(true);
-
-      requestAnimationFrame(() => {
-        if (videoRef.current) {
-          videoRef.current.srcObject = stream;
-        }
-      });
-    } catch {
+    } else if (error.name === "NotFoundError") {
+      setCameraError("No camera was found on this device.");
+    } else {
       setCameraError(
-        "Camera permission was denied or the camera is unavailable."
+        "Unable to open the camera. Please check your camera permissions."
       );
     }
-  };
+  }
+};
 
   const stopCamera = () => {
     if (streamRef.current) {
